@@ -1,12 +1,20 @@
 package com.example.apple
 
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.icu.number.NumberFormatter.with
+import android.icu.number.NumberRangeFormatter.with
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.bumptech.glide.GenericTransitionOptions.with
+import com.bumptech.glide.Glide.with
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.with
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.with
+import com.bumptech.glide.module.AppGlideModule
 import kotlinx.coroutines.*
-
+@GlideModule
+public final class MyAppGlideModule : AppGlideModule()
 class MainActivity : AppCompatActivity() {
 
     lateinit var img : ImageView
@@ -14,12 +22,22 @@ class MainActivity : AppCompatActivity() {
     var flag:Boolean = false
     lateinit var job : Job
 
+    lateinit var imgAuthor : ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         img = findViewById(R.id.img)
         game = findViewById(R.id.game)
+
+        imgAuthor = findViewById(R.id.imgAuthor)
+        GlideApp.with(this)
+            //.load(R.drawable.earth)
+            .load(R.drawable.dream)
+            .circleCrop()
+            .override(800, 600)
+            .into(imgAuthor)
 
         img.setOnClickListener({
             if (flag){
